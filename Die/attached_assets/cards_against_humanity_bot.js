@@ -513,23 +513,24 @@ async function submitAnswer(player, answerText, message) {
 }
 
 async function displayBlackCard(channel) {
-  // Black card embed with large font
+  const border = '•°•°•°•°•°•°•°•°•°•°•°•°•°•°•°•°•';
   const blackCardEmbed = new EmbedBuilder()
     .setColor('#000000')
-    .setTitle('📜 BLACK CARD')
-    .setDescription(`# ${gameState.currentBlackCard.text}`)
-    .setFooter({ text: 'Submit your answers by typing in the chat!' });
-
-  // Game info embed
-  const infoEmbed = new EmbedBuilder()
-    .setColor('#4CAF50')
+    .setTitle(`${border}\n📜 BLACK CARD 📜\n${border}`)
+    .setDescription(`>>> # ${gameState.currentBlackCard.text}`)
     .addFields([
-      { name: '⏰ Time Remaining', value: `${answerTimeLimit / 1000} seconds`, inline: true },
-      { name: '👑 Card Czar', value: gameState.czar.username, inline: true },
-      { name: '📝 Players Submitted', value: `${Object.keys(gameState.submittedAnswers).length}/${gameState.players.length - 1}`, inline: true }
-    ]);
+      { name: '⏰ Time', value: createArtisticTimer(answerTimeLimit, answerTimeLimit), inline: true },
+      { name: '👑 Czar', value: gameState.czar.username, inline: true },
+      { name: '📝 Answers', value: `${Object.keys(gameState.submittedAnswers).length}/${gameState.players.length - 1}`, inline: true }
+    ])
+    .setFooter({ text: `✨ Submit your answers in chat! | Round ${Object.keys(gameState.leaderboard).length + 1}` });
 
-  gameState.gameMessage = await channel.send({ embeds: [blackCardEmbed, infoEmbed] });
+  const progressBar = createProgressBar(Object.keys(gameState.submittedAnswers).length / (gameState.players.length - 1));
+  const statusEmbed = new EmbedBuilder()
+    .setColor('#4CAF50')
+    .setDescription(`**Progress:** ${progressBar}\n*Waiting for players to submit their answers...*`);
+
+  gameState.gameMessage = await channel.send({ embeds: [blackCardEmbed, statusEmbed] });
 
   answerTimeout = setTimeout(() => {
     if (Object.keys(gameState.submittedAnswers).length === 0) {
@@ -552,14 +553,12 @@ async function displayAnswersAndStartVoting(channel) {
     return;
   }
 
-  // Shuffle answers to randomize display order
   const shuffledAnswers = [...answers];
   shuffleArray(shuffledAnswers);
 
-  let answersList = '';
-  shuffledAnswers.forEach((answer, index) => {
-    answersList += `${emojis[index]} ${answer}\n`;
-  });
+  let answersList = shuffledAnswers.map((answer, index) => 
+    `${emojis[index]} ┃ ${answer}`
+  ).join('\n\n');
 
   // Announcement embed for all players
   const announcementEmbed = new EmbedBuilder()
