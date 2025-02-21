@@ -552,10 +552,37 @@ async function displayAnswersAndStartVoting(channel) {
     return;
   }
 
+  // Shuffle answers to randomize display order
+  const shuffledAnswers = [...answers];
+  shuffleArray(shuffledAnswers);
+
   let answersList = '';
-  answers.forEach((answer, index) => {
-    answersList += `**${index + 1}.** ${answer}\n`;
+  shuffledAnswers.forEach((answer, index) => {
+    answersList += `${emojis[index]} ${answer}\n`;
   });
+
+  // Announcement embed for all players
+  const announcementEmbed = new EmbedBuilder()
+    .setColor('#FFD700')
+    .setTitle('🎭 All Answers Submitted! 🎭')
+    .setDescription('Here are all the submitted answers:')
+    .addFields(
+      { name: '📜 The Question', value: `>>> ${gameState.currentBlackCard.text}` },
+      { name: '🃏 The Answers', value: answersList || '*No answers submitted.*' }
+    )
+    .setFooter({ text: `${gameState.czar.username} is choosing the winner...` });
+
+  await channel.send({ embeds: [announcementEmbed] });
+
+  // Czar-specific embed
+  const czarEmbed = new EmbedBuilder()
+    .setColor('#FF4500')
+    .setTitle('🎯 Time to Choose!')
+    .setDescription(`*${gameState.czar.username}*, type a number \`(1-${shuffledAnswers.length})\` to choose the winner!`)
+    .addFields(
+      { name: '📜 The Question', value: `>>> ${gameState.currentBlackCard.text}` },
+      { name: '🃏 The Answers', value: answersList }
+    );
 
   const fields = [
     { name: '📜 The Question', value: `>>> ${gameState.currentBlackCard.text}` },
