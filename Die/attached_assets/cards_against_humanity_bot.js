@@ -813,7 +813,7 @@ const commands = [
                     .addChoices(
                         { name: 'Random', value: 'random' },
                         { name: 'Awkward Moments', value: 'awkward_moments' }
-                    )))
+                    ))
             .addStringOption(option =>
                 option.setName('type')
                     .setDescription('Card type')
