@@ -1,0 +1,13 @@
+
+{
+  "game": {
+    "start": "खेल शुरू हुआ",
+    "end": "खेल समाप्त हुआ",
+    "round": "राउंड {round}",
+    "winner": "{player} विजेता!"
+  },
+  "errors": {
+    "not_enough_players": "पर्याप्त खिलाड़ी नहीं हैं",
+    "game_in_progress": "खेल पहले से चल रहा है"
+  }
+}

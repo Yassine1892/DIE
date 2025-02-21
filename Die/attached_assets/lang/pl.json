@@ -1,0 +1,13 @@
+
+{
+  "game": {
+    "start": "Gra rozpoczęta",
+    "end": "Gra zakończona",
+    "round": "Runda {round}",
+    "winner": "{player} wygrywa!"
+  },
+  "errors": {
+    "not_enough_players": "Za mało graczy",
+    "game_in_progress": "Gra już trwa"
+  }
+}

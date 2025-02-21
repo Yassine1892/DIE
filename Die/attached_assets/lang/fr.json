@@ -1,0 +1,13 @@
+
+{
+  "game": {
+    "start": "Partie commencée",
+    "end": "Partie terminée",
+    "round": "Tour {round}",
+    "winner": "{player} gagne !"
+  },
+  "errors": {
+    "not_enough_players": "Pas assez de joueurs",
+    "game_in_progress": "Une partie est déjà en cours"
+  }
+}
