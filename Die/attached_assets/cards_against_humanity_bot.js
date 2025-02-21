@@ -361,19 +361,51 @@ const playersList = gameState.players.map((p, i) => {
     return `• \`${isLeader ? '👑 ' : ''}${p.username}\` [\`${color}\`]`;
 }).join('\n');
 
+const border = '•°•°•°•°•°•°•°•°•°•°•°•°•°•°•°•°•';
 const lobbyEmbed = new EmbedBuilder()
-        .setColor(0x7289DA)
-        .setTitle('🎮 Cards Against Humanity - New Game')
-        .setDescription('*A party game for horrible people.*')
+        .setColor('#FF69B4')
+        .setTitle(`${border}\n🎮 CARDS AGAINST HUMANITY\n${border}`)
+        .setDescription('```css\n[A Party Game for Horrible People]\n```')
         .addFields(
-          { name: '👑 Game Leader', value: `\`${interaction.user.username}\``, inline: true },
-          { name: '🎯 Target Score', value: `\`${targetScore} points\``, inline: true },
-          { name: '📦 Card Pack', value: `\`${cardPacks[0]}\``, inline: true },
-          { name: '👥 Players', value: playersList || 'No players yet', inline: false },
-          { name: '📋 How to Join', value: '```Click the "Join Game" button below to join the fun!```', inline: false },
-          { name: '⚡ Quick Rules', value: '```diff\n+ 1. Join the game\n+ 2. Leader starts when ready\n+ 3. Submit funny answers\n+ 4. Card Czar picks the best one\n+ 5. First to target score wins!\n```' }
+          { 
+            name: '👑 Game Master', 
+            value: `>>> **${interaction.user.username}**\n*Leading the chaos*`, 
+            inline: true 
+          },
+          { 
+            name: '🎯 Victory Goal', 
+            value: `>>> **${targetScore} Points**\n*Race to glory*`, 
+            inline: true 
+          },
+          { 
+            name: '🎲 Game Mode', 
+            value: `>>> **${currentCategory.replace('_', ' ').toUpperCase()}**\n*Let chaos reign*`, 
+            inline: true 
+          },
+          { 
+            name: '\u200B',
+            value: '```diff\n- BRAVE SOULS IN THE ARENA -```',
+            inline: false 
+          },
+          { 
+            name: '👥 Players', 
+            value: playersList || '*Awaiting brave contestants...*', 
+            inline: false 
+          },
+          { 
+            name: '📋 How to Join', 
+            value: '```yaml\nClick "Join Game" to enter the arena of chaos!```', 
+            inline: false 
+          },
+          { 
+            name: '⚡ Quick Rules', 
+            value: '```ansi\n\u001b[1;31m1.\u001b[0m Join the madness\n\u001b[1;33m2.\u001b[0m Follow your leader\n\u001b[1;32m3.\u001b[0m Be hilariously inappropriate\n\u001b[1;36m4.\u001b[0m Impress the Card Czar\n\u001b[1;35m5.\u001b[0m Glory awaits the victor!```' 
+          }
         )
-        .setFooter({ text: '⏳ Waiting for more players to join...' });
+        .setFooter({ 
+          text: `${gameState.players.length >= 2 ? '✨ Ready for chaos!' : `⏳ Waiting for ${2 - gameState.players.length} more brave soul(s)`}`,
+          iconURL: interaction.user.displayAvatarURL()
+        });
 
       const joinButton = new ButtonBuilder() 
         .setCustomId('join_game')
@@ -777,7 +809,7 @@ const commands = [
             .addStringOption(option =>
                 option.setName('text')
                     .setDescription('Card text')
-                    .setRequired(true))
+                    .setRequiredtrue))
             .addStringOption(option =>
                 option.setName('type')
                     .setDescription('Card type')
