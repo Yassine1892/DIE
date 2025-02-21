@@ -313,8 +313,8 @@ async function startGame(interaction) {
     if (gameState.gameLeader && gameState.gameLeader === interaction.user.id && gameState.waitingForLeaderToStart) {
       gameState.waitingForLeaderToStart = false;
 
-      if (gameState.players.length < 2) {
-        return interaction.reply({ content: 'Not enough players to start the game.', ephemeral: true });
+      if (gameState.players.length < 3) {
+        return interaction.reply({ content: 'At least 3 players are required to start the game.', ephemeral: true });
       }
 
       if (!loadCardPack('cards')) {
@@ -550,8 +550,17 @@ async function displayBlackCard(channel) {
   const border = '•°•°•°•°•°•°•°•°•°•°•°•°•°•°•°•°•';
   const blackCardEmbed = new EmbedBuilder()
     .setColor('#000000')
-    .setTitle(`${border}\n📜 BLACK CARD 📜\n${border}`)
-    .setDescription(`>>> # ${gameState.currentBlackCard.text}`)
+    .setTitle('𝕮𝖆𝖗𝖉𝖘 𝕬𝖌𝖆𝖎𝖓𝖘𝖙 𝕳𝖚𝖒𝖆𝖓𝖎𝖙𝖞')
+    .setDescription(`
+\`\`\`
+╔════════════════════════╗
+║     𝔹𝕝𝕒𝕔𝕜 ℂ𝕒𝕣𝕕      ║
+╠════════════════════════╣
+║                        ║
+  ${gameState.currentBlackCard.text}
+║                        ║
+╚════════════════════════╝
+\`\`\``)
     .addFields([
       { name: '⏰ Time', value: createArtisticTimer(answerTimeLimit, answerTimeLimit), inline: true },
       { name: '👑 Czar', value: gameState.czar.username, inline: true },
