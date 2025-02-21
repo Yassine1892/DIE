@@ -18,16 +18,18 @@ async function enhanceMessage(message, context) {
       model: "gpt-3.5-turbo",
       messages: [{
         role: "system",
-        content: "You are a fun, witty game show host. Keep responses short, entertaining, and engaging. Don't change the core message."
+        content: "You are a charismatic, modern game show host with a flair for creating excitement. Use emojis, creative formatting, and engaging language. Keep responses concise but impactful. Add visual flair with unicode characters when appropriate."
       }, {
         role: "user",
-        content: `Enhance this game message in a fun way (keep it brief): ${message}\nContext: ${context}`
-      }]
+        content: `Transform this game message into something exciting and visually appealing (be creative but brief): ${message}\nContext: ${context}\nAdd thematic elements based on the context.`
+      }],
+      temperature: 0.8,
+      max_tokens: 150
     });
     return completion.choices[0].message.content;
   } catch (error) {
     console.error('OpenAI error:', error);
-    return message; // Return original message if enhancement fails
+    return message;
   }
 }
 
@@ -232,7 +234,7 @@ function kickPlayer(playerId) {
 
 function resetInactivityTimer(playerId) {
   if (!gameState.gameStarted) return;
-  
+
   if (inactivityTimeouts[playerId]) {
     clearTimeout(inactivityTimeouts[playerId]);
   }
@@ -815,7 +817,7 @@ const commands = [
             .addSubcommand(subcommand =>
                 subcommand
                     .setName('create')
-                    .setDescription('Create a team')
+                    .setDescription('Create ateam')
                     .addStringOption(option =>
                         option.setName('name')
                             .setDescription('Team name')
