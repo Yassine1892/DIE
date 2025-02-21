@@ -1,1 +1,12 @@
 modules = ["nodejs-20"]
+
+[workflows]
+runButton = "Run"
+
+[[workflows.workflow]]
+name = "Run"
+author = 39873697
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "cd Die && node index.js"

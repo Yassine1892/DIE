@@ -1,3 +1,4 @@
+const keepAlive = require('./keep_alive.js');
 require('./server.js'); // Keep the bot alive
 
 const { Client, GatewayIntentBits, EmbedBuilder, ButtonBuilder, ButtonStyle, ActionRowBuilder, SlashCommandBuilder } = require('discord.js');
