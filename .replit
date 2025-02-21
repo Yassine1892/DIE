@@ -9,4 +9,8 @@ author = 39873697
 
 [[workflows.workflow.tasks]]
 task = "shell.exec"
-args = "cd Die && node index.js"
+args = "cd Die/attached_assets && node server.js"
+
+[[ports]]
+localPort = 3000
+externalPort = 8080
