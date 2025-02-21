@@ -1,5 +1,6 @@
 
 const app = require("./keep_alive.js");
+const bot = require("./cards_against_humanity_bot.js");
 const port = 3000;
 
 function getGameStatus() {
