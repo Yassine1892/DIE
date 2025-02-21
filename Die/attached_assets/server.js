@@ -34,13 +34,13 @@ app.get("/", (req, res) => {
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
         <style>
           :root {
-            --primary: #7289da;
-            --secondary: #5865f2;
-            --background: #0f0f1a;
-            --card-bg: #1a1b2e;
-            --card-hover: #242642;
+            --primary: #ff69b4;
+            --secondary: #00ffff;
+            --background: #1a0f2e;
+            --card-bg: #2a1b3e;
+            --card-hover: #3a2b4e;
             --text: #ffffff;
-            --text-secondary: #a0a0a0;
+            --text-secondary: #bb86fc;
             --success: #43b581;
             --warning: #faa61a;
             --error: #f04747;
@@ -66,6 +66,11 @@ app.get("/", (req, res) => {
             0% { background-position: 0% 50%; }
             50% { background-position: 100% 50%; }
             100% { background-position: 0% 50%; }
+          }
+
+          @keyframes borderGlow {
+            0%, 100% { border-color: var(--primary); }
+            50% { border-color: var(--secondary); }
           }
 
           .container {
@@ -127,6 +132,9 @@ app.get("/", (req, res) => {
             background: linear-gradient(135deg, var(--card-bg) 0%, rgba(26, 27, 46, 0.8) 100%);
             padding: 25px;
             border-radius: 16px;
+            border: 2px solid transparent;
+            background-clip: padding-box;
+            animation: borderGlow 2s ease-in-out infinite;
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             position: relative;
